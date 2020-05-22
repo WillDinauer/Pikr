@@ -27,9 +27,13 @@
     <string name="friends_header">Add to friends list!</string>
     <string name="my_friends">My Friends:</string>
     <string name="poster_name">Poster\'s name</string>
-    <string name="current_feed">Current feed:</string>
+    <string name="current_feed">Feed type:</string>
     <string name="save">Save</string>
     <string name="publish_post">Publish post</string>
     <string name="create">Create</string>
     <string name="add_photo">Add Photo</string>
+    <string name="friends"># Friends</string>
+    <string name="posts"># Posts</string>
+    <string name="votes"># Votes</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

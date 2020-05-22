@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    Text Color won't change no clue why-->
     <TextView
         android:id="@+id/post_title_text"
         android:layout_width="match_parent"
@@ -53,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/blue"
+            android:background="@color/light_blue"
             android:textColor="@color/white"
             android:text="@string/previous"/>
 
@@ -66,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/blue"
+            android:background="@color/light_blue"
             android:textColor="@color/white"
             android:text="@string/next"/>
     </LinearLayout>

@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add_friends:
                 startActivity(new Intent(this, AddFriendsActivity.class));
                 return true;
+            case R.id.sign_out:
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

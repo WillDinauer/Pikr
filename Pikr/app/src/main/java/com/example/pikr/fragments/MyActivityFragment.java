@@ -39,19 +39,19 @@ public class MyActivityFragment extends Fragment {
         String nameText = "Hello, " + loginInfo.getName() + "!";
         ((TextView)view.findViewById(R.id.hello_text)).setText(nameText);
 
-        createEditProfileListener(view);
+//        createEditProfileListener(view);
 
         return view;
     }
 
-    private void createEditProfileListener(View view) {
-        Button editProfileButton = view.findViewById(R.id.edit_profile_button);
-
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Open registration page and allow user to edit information
-            }
-        });
-
-    }
+//    private void createEditProfileListener(View view) {
+//        Button editProfileButton = view.findViewById(R.id.edit_profile_button);
+//
+//        editProfileButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                // Open registration page and allow user to edit information
+//            }
+//        });
+//
+//    }
 }

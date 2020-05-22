@@ -8,5 +8,10 @@
     <color name="black">#000000</color>
     <color name="orange_tint">#F4A261</color>
     <color name="background">#FCEADE</color>
+    <color name="mid_red">#FFA38F</color>
+    <color name="light_red">#FFB9AA</color>
+    <color name="pale_red">#FFCABF</color>
+    <color name="light_blue">#3F95CA</color>
+
 
 </resources>
