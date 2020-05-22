@@ -24,12 +24,8 @@ public class MyActivityFragment extends Fragment {
         // Default constructor
     }
 
-    public static MyActivityFragment newInstance(String position) {
-        MyActivityFragment fragment = new MyActivityFragment();
-        Bundle values = new Bundle();
-        values.putString(PAGE_TYPE, position);
-        fragment.setArguments(values);
-        return fragment;
+    public static MyActivityFragment newInstance() {
+        return new MyActivityFragment();
     }
 
     @Override

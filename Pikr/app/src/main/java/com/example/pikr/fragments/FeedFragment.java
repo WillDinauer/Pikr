@@ -18,12 +18,8 @@ public class FeedFragment extends Fragment {
         // Default constructor
     }
 
-    public static FeedFragment newInstance(String position) {
-        FeedFragment fragment = new FeedFragment();
-        Bundle values = new Bundle();
-        values.putString(PAGE_TYPE, position);
-        fragment.setArguments(values);
-        return fragment;
+    public static FeedFragment newInstance() {
+        return new FeedFragment();
     }
 
     @Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,21 +8,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/main_view_pager"
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/main_view_pager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginBottom="70dp">-->
+<!--    </androidx.viewpager2.widget.ViewPager2>-->
+    
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="70dp">
-    </androidx.viewpager2.widget.ViewPager2>
+        android:layout_above="@+id/main_bottom_navigation"/>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:paddingBottom="15dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/blue"
         app:itemTextColor="@color/white"
         app:menu="@menu/main_navigation" >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-</FrameLayout>
+</RelativeLayout>
