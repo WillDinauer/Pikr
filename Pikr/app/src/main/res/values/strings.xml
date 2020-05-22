@@ -28,4 +28,8 @@
     <string name="my_friends">My Friends:</string>
     <string name="poster_name">Poster\'s name</string>
     <string name="current_feed">Current feed:</string>
+    <string name="save">Save</string>
+    <string name="publish_post">Publish post</string>
+    <string name="create">Create</string>
+    <string name="add_photo">Add Photo</string>
 </resources>

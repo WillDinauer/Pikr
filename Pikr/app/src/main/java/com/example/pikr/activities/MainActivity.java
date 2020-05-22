@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pikr.R;
 import com.example.pikr.adapters.MainViewPagerAdapter;
+import com.example.pikr.fragments.EntryFragment;
 import com.example.pikr.fragments.FeedFragment;
 import com.example.pikr.fragments.MyActivityFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,25 +35,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FeedFragment()).commit();
 //        bottomNavigationView = findViewById(R.id.main_bottom_navigation);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
+        //bottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
     }
 
-//    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment selectedFragment = null;
-//            switch (item.getItemId()){
-//                case R.id.start_activity_nav:
-//                    selectedFragment = new FeedFragment();
-//                    break;
-//                case R.id.history_activity_nav:
-//                    selectedFragment = new MyActivityFragment();
-//                    break;
-//            }
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-//            return true;
-//        }
-//    };
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragment = null;
+            switch (item.getItemId()){
+                case R.id.feed_activity_nav:
+                    selectedFragment = new FeedFragment();
+                    break;
+                case R.id.new_post_nav:
+                    selectedFragment = new EntryFragment();
+                    break;
+                case R.id.my_activity_nav:
+                    selectedFragment = new MyActivityFragment();
+                    break;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            return true;
+        }
+    };
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -83,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickFeed(MenuItem item){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FeedFragment()).commit();
+    }
+
+    public void onClickNewPost(MenuItem item){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EntryFragment()).commit();
     }
 
     /**
