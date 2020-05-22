@@ -8,12 +8,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/main_view_pager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginBottom="70dp">-->
-<!--    </androidx.viewpager2.widget.ViewPager2>-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp">
+    </androidx.viewpager2.widget.ViewPager2>
     
     <FrameLayout
         android:id="@+id/fragment_container"

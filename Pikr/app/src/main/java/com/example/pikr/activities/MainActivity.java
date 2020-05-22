@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pikr.R;
 import com.example.pikr.adapters.MainViewPagerAdapter;
+import com.example.pikr.fragments.EntryFragment;
 import com.example.pikr.fragments.FeedFragment;
 import com.example.pikr.fragments.MyActivityFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.start_activity_nav:
                     selectedFragment = new FeedFragment();
+                    break;
+                case R.id.entry_activity_nav:
+                    selectedFragment = new EntryFragment();
                     break;
                 case R.id.history_activity_nav:
                     selectedFragment = new MyActivityFragment();

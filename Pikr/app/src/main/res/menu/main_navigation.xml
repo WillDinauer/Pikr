@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/start_activity_nav"
         android:icon="@drawable/ic_home_black_24dp"
-        android:onClick="onClickFeed"
         android:title="@string/feed" />
     <item
+        android:id="@+id/entry_activity_nav"
+        android:icon="@drawable/ic_add_box_black_24dp"
+        android:title="@string/create"/>
+    <item
         android:id="@+id/history_activity_nav"
-        android:onClick="onClickMyActivity"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/my_activity" />
 </menu>
