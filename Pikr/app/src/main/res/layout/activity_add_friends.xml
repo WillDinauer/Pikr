@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/add_friends_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="@string/friends_header" />
+
+    <TextView
+        android:id="@+id/add_friends_subheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/add_friends_header"
+        android:textColor="@color/blue"
+        android:text="@string/friends_subheader" />
+
+    <View
+        android:id="@+id/first_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/add_friends_subheader"
+        android:background="@android:color/darker_gray"/>
+
+    <SearchView
+        android:id="@+id/search_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/first_divider"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <View
+        android:id="@+id/second_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/search_friends"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/my_friends_text"
+        android:layout_width="match_parent"
+        android:paddingTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_friends"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="@string/my_friends" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/my_friends_text"/>
+
+</RelativeLayout>

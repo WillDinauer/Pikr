@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    Text Color won't change no clue why-->
+    <TextView
+        android:id="@+id/post_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:hint="@string/title"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/user_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:layout_below="@+id/post_title_text"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:hint="@string/poster_name" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:paddingBottom="5dp"
+        android:layout_below="@id/user_text"/>
+
+    <TextView
+        android:id="@+id/description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle"
+        android:layout_below="@+id/imageButton"
+        android:hint="@string/post_description"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/description_text">
+        <Button
+            android:id="@+id/previous_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:text="@string/previous"/>
+
+        <Space
+            android:layout_height="match_parent"
+            android:layout_width="50dp"/>
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:text="@string/next"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -16,8 +16,6 @@ import com.example.pikr.R;
 import com.example.pikr.models.Login;
 
 public class MyActivityFragment extends Fragment {
-    private static final String PAGE_TYPE = "my_activity_page";
-
     private Login loginInfo;
 
     public MyActivityFragment(){

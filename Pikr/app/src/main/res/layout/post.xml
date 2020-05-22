@@ -36,7 +36,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="330dp"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:padding="10dp"
         android:maxWidth="330dp"
         android:maxHeight="200dp"
@@ -73,3 +73,4 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.156" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

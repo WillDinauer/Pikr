@@ -7,38 +7,64 @@
     android:orientation="vertical"
     tools:layout_editor_absoluteX="1dp"
     android:layout_margin="10dp"
+    android:background="@color/background"
     android:padding="10dp"
     tools:layout_editor_absoluteY="1dp">
+
+    <TextView
+        android:id="@+id/feed_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="10dp"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        android:text="@string/current_feed"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/linear_layout"
-        android:layout_alignParentTop="true">
+        android:layout_below="@+id/feed_type"
+        android:paddingBottom="10dp"
+        android:id="@+id/linear_layout">
 
         <Button
             android:id="@+id/public_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_weight="1"
-            android:shadowColor="@color/white"
+            android:background="@color/white"
             android:text="@string/public_feed" />
 
+        <Space
+            android:layout_height="match_parent"
+            android:layout_width="30dp"/>
         <Button
             android:id="@+id/private_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_weight="1"
-            android:shadowColor="@color/white"
+            android:background="@color/white"
             android:text="@string/private_feed" />
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
+    <View
+        android:id="@+id/second_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/linear_layout"
+        android:background="@color/blue"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/feed_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linear_layout">
 
-    </androidx.viewpager2.widget.ViewPager2>
+    </androidx.viewpager.widget.ViewPager>
 
 </RelativeLayout>

@@ -16,10 +16,16 @@
     <string name="feed">Feed</string>
     <string name="my_activity">My Activity</string>
     <string name="hello">Hello</string>
-    <string name="public_feed">public</string>
-    <string name="private_feed">private</string>
-    <string name="post_description">Description of Post</string>
+    <string name="public_feed">Public</string>
+    <string name="private_feed">Private</string>
+    <string name="post_description">Description \nof \nPost</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="title">Title</string>
+    <string name="add_friends">Add Friends</string>
+    <string name="friends_subheader">Posts from friends will appear in your private feed</string>
+    <string name="friends_header">Add to friends list!</string>
+    <string name="my_friends">My Friends:</string>
+    <string name="poster_name">Poster\'s name</string>
+    <string name="current_feed">Current feed:</string>
 </resources>

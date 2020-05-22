@@ -23,18 +23,20 @@ public class LoginActivity extends AppCompatActivity {
         Button signInButton = findViewById(R.id.sign_in);
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                EditText emailEntry = findViewById(R.id.email);
-                EditText passwordEntry = findViewById(R.id.password);
-                if(!(currentLogin.getEmail() == null || currentLogin.getEmail().equals("empty") || currentLogin.getPassword().equals("empty"))) {
-                    if (emailEntry.getText().toString().equals(currentLogin.getEmail()) && passwordEntry.getText().toString().equals(currentLogin.getPassword())) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Email or password is incorrect", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "No profile has been created", Toast.LENGTH_SHORT).show();
-                }
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+//                EditText emailEntry = findViewById(R.id.email);
+//                EditText passwordEntry = findViewById(R.id.password);
+//                if(!(currentLogin.getEmail() == null || currentLogin.getEmail().equals("empty") || currentLogin.getPassword().equals("empty"))) {
+//                    if (emailEntry.getText().toString().equals(currentLogin.getEmail()) && passwordEntry.getText().toString().equals(currentLogin.getPassword())) {
+//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "Email or password is incorrect", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                else{
+//                    Toast.makeText(getApplicationContext(), "No profile has been created", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
     }

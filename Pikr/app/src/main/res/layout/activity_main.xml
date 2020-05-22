@@ -6,29 +6,22 @@
     tools:context=".activities.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical">
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/main_view_pager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginBottom="70dp">-->
-<!--    </androidx.viewpager2.widget.ViewPager2>-->
-    
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/main_bottom_navigation"/>
-
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/fragment_container"
         android:background="@color/blue"
         app:itemTextColor="@color/white"
+        app:itemIconTint="@color/orange_tint"
         app:menu="@menu/main_navigation" >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
