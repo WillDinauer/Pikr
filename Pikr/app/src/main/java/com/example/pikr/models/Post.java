@@ -15,6 +15,9 @@ public class Post {
     private String datetime;
     private ArrayList<Picture> pictures;
 
+    public Post(){
+    }
+
     public Post(String title, String description, String datetime, String pictures){
         this.title = title;
         this.description = description;

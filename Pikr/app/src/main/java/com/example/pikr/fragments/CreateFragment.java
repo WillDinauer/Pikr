@@ -5,44 +5,51 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pikr.BuildConfig;
 import com.example.pikr.R;
 import com.example.pikr.activities.RegisterActivity;
+import com.example.pikr.models.Picture;
+import com.example.pikr.models.Post;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EntryFragment#newInstance} factory method to
+ * Use the {@link CreateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EntryFragment extends Fragment {
+public class CreateFragment extends Fragment {
     private static final int PHOTO_FROM_CAMERA_CODE = 0;
     private static final int PHOTO_FROM_GALLERY_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
@@ -53,12 +60,16 @@ public class EntryFragment extends Fragment {
     private String mPath;
     private Uri uri;
     private static final int MAX_PHOTOS = 5;
-    public EntryFragment() {
+    private Post newPost;
+    private DatabaseReference mRef;
+    private ValueEventListener postListener;
+
+    public CreateFragment() {
         // Required empty public constructor
     }
 
-    public static EntryFragment newInstance() {
-        return new EntryFragment();
+    public static CreateFragment newInstance() {
+        return new CreateFragment();
     }
 
     @Override
@@ -66,6 +77,8 @@ public class EntryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         checkPermissions();
+        newPost = new Post();
+
         return inflater.inflate(R.layout.fragment_entry, container, false);
     }
 
@@ -101,11 +114,16 @@ public class EntryFragment extends Fragment {
         mPhotoButton = view.findViewById(R.id.add_photo_button);
         mPostButton = view.findViewById(R.id.save_post_button);
 
+        createPhotoButtonListener();
+        createPublishPostListener();
+
         mLinearLayout = view.findViewById(R.id.photo_scroll);
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View scrollView = inflater.inflate(R.layout.photo_item, mLinearLayout, false);
         mLinearLayout.addView(scrollView);
+    }
 
+    private void createPhotoButtonListener(){
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +144,48 @@ public class EntryFragment extends Fragment {
                 builder.show();
             }
         });
+    }
+
+    private void createPublishPostListener(){
+        mPostButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   boolean complete = fillPostValues();
+
+                   if(complete) {
+                       FirebaseDatabase database = FirebaseDatabase.getInstance();
+                       mRef = database.getReference();
+                       mRef.setValue(newPost);
+                   }
+                   else{
+                       Toast.makeText(getContext(), "Please fill in all fields",
+                               Toast.LENGTH_SHORT).show();
+                   }
+               }
+           }
+        );
+    }
+
+    private boolean fillPostValues(){
+        boolean complete = allValuesFilledOut();
+
+        newPost.setTitle(mTitle.getText().toString());
+        newPost.setDescription(mDescription.getText().toString());
+        newPost.setPictures(new ArrayList<Picture>());
+        newPost.setDatetime(Calendar.getInstance().getTime().toString());
+
+        return complete;
+    }
+
+    private boolean allValuesFilledOut(){
+        boolean complete = false;
+
+        if(getView() != null) {
+            if(!mTitle.getText().toString().equals("") && !mDescription.getText().toString().equals("")){
+                complete = true;
+            }
+        }
+        return complete;
     }
 
     private void onItemSelected(int code){
