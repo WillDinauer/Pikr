@@ -67,11 +67,19 @@
 
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
+    <ListView
+        android:id="@+id/profile_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/friends_lin_layout"
         android:layout_marginTop="14dp"
         android:background="@drawable/rectangle"
-        android:padding="10dp" />
+        android:padding="10dp"/>
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/friends_lin_layout"-->
+<!--        android:layout_marginTop="14dp"-->
+<!--        android:background="@drawable/rectangle"-->
+<!--        android:padding="10dp" />-->
 </RelativeLayout>

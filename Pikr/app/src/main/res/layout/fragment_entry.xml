@@ -22,15 +22,23 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/title"
                 android:textStyle="bold"
-                android:inputType="textPersonName"
+                android:inputType="textCapSentences"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_margin="10dp"
+            android:scrollbars="none"
             android:background="@drawable/rectangle"
-            android:layout_height="200dp"/>
+            >
+            <LinearLayout
+                android:id="@+id/photo_scroll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
 
         <Button
             android:id="@+id/add_photo_button"
