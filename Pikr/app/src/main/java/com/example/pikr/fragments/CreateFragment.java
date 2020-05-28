@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.pikr.BuildConfig;
 import com.example.pikr.R;
 import com.example.pikr.activities.RegisterActivity;
+import com.example.pikr.models.Login;
 import com.example.pikr.models.Picture;
 import com.example.pikr.models.Post;
 import com.google.firebase.database.DataSnapshot;
@@ -54,6 +55,7 @@ public class CreateFragment extends Fragment {
     private static final int PHOTO_FROM_GALLERY_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
     private static final int GALLERY_IMAGE_ACTIVITY_REQUEST_CODE = 3;
+    private static final CharSequence PERIOD_REPLACEMENT_KEY = "hgiasdvohekljh91-76";
     private TextView mTitle, mDescription;
     private Button mPostButton, mPhotoButton;
     private LinearLayout mLinearLayout;
@@ -63,6 +65,7 @@ public class CreateFragment extends Fragment {
     private Post newPost;
     private DatabaseReference mRef;
     private ValueEventListener postListener;
+    private Login currLogin;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -77,6 +80,8 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         checkPermissions();
+
+        currLogin = new Login(getContext().getApplicationContext());
         newPost = new Post();
 
         return inflater.inflate(R.layout.fragment_entry, container, false);
@@ -154,8 +159,10 @@ public class CreateFragment extends Fragment {
 
                    if(complete) {
                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                       mRef = database.getReference();
-                       mRef.setValue(newPost);
+                       String emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
+                       mRef = database.getReference(emailKey);
+                       String currentIndex = "0";
+                       mRef.child(currentIndex).setValue(newPost);
                    }
                    else{
                        Toast.makeText(getContext(), "Please fill in all fields",

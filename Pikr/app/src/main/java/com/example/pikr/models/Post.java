@@ -14,8 +14,10 @@ public class Post {
     private String description;
     private String datetime;
     private ArrayList<Picture> pictures;
+    private boolean deleted;
 
     public Post(){
+        deleted = false;
     }
 
     public Post(String title, String description, String datetime, String pictures){
@@ -26,6 +28,7 @@ public class Post {
             this.pictures = new ArrayList<>();
         }
         else this.pictures = jsonPicsToArray(pictures);
+        deleted = false;
     }
 
     private ArrayList<Picture> jsonPicsToArray(String pictures) {
@@ -82,5 +85,13 @@ public class Post {
 
     public void setPictures(ArrayList<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public void setDeleted(boolean isDeleted){
+        deleted = isDeleted;
+    }
+
+    public boolean getDeleted(){
+        return deleted;
     }
 }
