@@ -10,11 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.pikr.Post;
+import com.example.pikr.models.Post;
 import com.example.pikr.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileAdapter extends ArrayAdapter<Post> {
 

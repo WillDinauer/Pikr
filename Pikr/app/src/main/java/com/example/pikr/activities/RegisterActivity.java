@@ -2,6 +2,7 @@ package com.example.pikr.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pikr.R;
 import com.example.pikr.models.Login;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -30,12 +38,13 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton isFemale, isMale;
     private Login currentLogin;
     private Class changeToActivity;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        mAuth = FirebaseAuth.getInstance();
         changeToActivity = LoginActivity.class;
 
         currentLogin = new Login(getApplicationContext());
@@ -157,13 +166,35 @@ public class RegisterActivity extends AppCompatActivity {
         if(!someProfileVarsEmpty()){
             if(password.getText().toString().length() >= MIN_PASSWORD_LENGTH) {
                 saveLogin();
+                addProfileToFirebase();
             }
             else{
                 password.setError("Password must be at least six characters");
             }
         }
     }
-//
+
+    private void addProfileToFirebase(){
+        mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("FIREBASE", "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("FIREBASE", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            currentLogin.clearProfile();
+                        }
+                    }
+                });
+    }
+
+
 //    /**
 //     * If the profile needs to be autofilled with current information (occurs in edit profile mode
 //     * in MainActivity), fill in the stored values

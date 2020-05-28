@@ -16,6 +16,8 @@ import com.example.pikr.R;
 import com.example.pikr.activities.MainActivity;
 
 public class PostFragment extends Fragment {
+    ImageButton imageButton;
+
     public PostFragment(){
         // Default constructor
     }
@@ -36,7 +38,7 @@ public class PostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feed_post, container, false);
         Log.d("TEST", "onCreateView()");
 
-        ImageButton imageButton = view.findViewById(R.id.imageButton);
+        imageButton = view.findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

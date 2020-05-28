@@ -1,6 +1,6 @@
-package com.example.pikr;
+package com.example.pikr.models;
 
-import android.widget.ImageView;
+import com.example.pikr.models.Picture;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +14,9 @@ public class Post {
     private String description;
     private String datetime;
     private ArrayList<Picture> pictures;
+
+    public Post(){
+    }
 
     public Post(String title, String description, String datetime, String pictures){
         this.title = title;

@@ -1,13 +1,10 @@
 package com.example.pikr.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pikr.R;
 import com.example.pikr.adapters.MainViewPagerAdapter;
-import com.example.pikr.fragments.EntryFragment;
+import com.example.pikr.fragments.CreateFragment;
 import com.example.pikr.fragments.FeedFragment;
 import com.example.pikr.fragments.MyActivityFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new FeedFragment();
                     break;
                 case R.id.new_post_nav:
-                    selectedFragment = new EntryFragment();
+                    selectedFragment = new CreateFragment();
                     break;
                 case R.id.my_activity_nav:
                     selectedFragment = new MyActivityFragment();
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickNewPost(MenuItem item){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EntryFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CreateFragment()).commit();
     }
 
     /**
