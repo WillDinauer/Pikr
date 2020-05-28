@@ -36,4 +36,5 @@
     <string name="posts"># Posts</string>
     <string name="votes"># Votes</string>
     <string name="sign_out">Sign Out</string>
+    <string name="delete">DELETE</string>
 </resources>
