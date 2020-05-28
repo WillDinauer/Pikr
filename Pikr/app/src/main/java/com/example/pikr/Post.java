@@ -19,7 +19,10 @@ public class Post {
         this.title = title;
         this.description = description;
         this.datetime = datetime;
-        this.pictures = jsonPicsToArray(pictures);
+        if (pictures.equals("")){                                       //FIX THIS
+            this.pictures = new ArrayList<>();
+        }
+        else this.pictures = jsonPicsToArray(pictures);
     }
 
     private ArrayList<Picture> jsonPicsToArray(String pictures) {

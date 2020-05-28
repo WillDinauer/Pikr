@@ -74,7 +74,14 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<Post>> loader, ArrayList<Post> data) {
-        if (loader.getId() == LOAD_POSTS_ID && data.size()>0){
+        if (data==null){
+            Post post = new Post("", "", "", "");
+            ArrayList<Post> example = new ArrayList<>();
+            example.add(post);
+            mAdapter = new ProfileAdapter(requireActivity(), 0, example);
+            mListView.setAdapter(mAdapter);
+        }
+        else if (loader.getId() == LOAD_POSTS_ID && data.size()>0){
             mAdapter = new ProfileAdapter(requireActivity(), 0, data);
             mListView.setAdapter(mAdapter);
         }
