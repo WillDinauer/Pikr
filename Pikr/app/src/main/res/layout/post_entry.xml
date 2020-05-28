@@ -5,16 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/entry_title"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
         android:textColor="@color/blue"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="45dp" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/entry_votes"
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/entry_title"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/entry_time"
         android:layout_width="match_parent"

@@ -31,8 +31,10 @@ public class ProfileAdapter extends ArrayAdapter<Post> {
         convertView = LayoutInflater.from(context).inflate(R.layout.post_entry, parent, false);
         TextView title = convertView.findViewById(R.id.entry_title);
         TextView time = convertView.findViewById(R.id.entry_time);
+        TextView votes = convertView.findViewById(R.id.entry_votes);
         title.setText("Title");
         time.setText("12:12");
+        votes.setText("Votes: 0");
         return convertView;
     }
 }
