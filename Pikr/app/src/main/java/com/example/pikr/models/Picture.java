@@ -1,4 +1,4 @@
-package com.example.pikr;
+package com.example.pikr.models;
 
 public class Picture {
     private String uri;

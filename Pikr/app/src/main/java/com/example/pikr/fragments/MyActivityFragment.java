@@ -1,11 +1,9 @@
 package com.example.pikr.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,15 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
-import com.example.pikr.Picture;
-import com.example.pikr.Post;
+import com.example.pikr.models.Post;
 import com.example.pikr.R;
 import com.example.pikr.adapters.ProfileAdapter;
 import com.example.pikr.loaders.PastPostsLoader;
 import com.example.pikr.models.Login;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MyActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Post>>{
     private static final int LOAD_POSTS_ID = 1;

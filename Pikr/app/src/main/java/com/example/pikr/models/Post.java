@@ -1,6 +1,6 @@
-package com.example.pikr;
+package com.example.pikr.models;
 
-import android.widget.ImageView;
+import com.example.pikr.models.Picture;
 
 import org.json.JSONArray;
 import org.json.JSONException;

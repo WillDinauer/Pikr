@@ -30,23 +30,40 @@ public class LoginActivity extends AppCompatActivity {
         Button signInButton = findViewById(R.id.sign_in);
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                handleFirebaseSignIn();
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-//                EditText emailEntry = findViewById(R.id.email);
-//                EditText passwordEntry = findViewById(R.id.password);
-//                if(!(currentLogin.getEmail() == null || currentLogin.getEmail().equals("empty") || currentLogin.getPassword().equals("empty"))) {
-//                    if (emailEntry.getText().toString().equals(currentLogin.getEmail()) && passwordEntry.getText().toString().equals(currentLogin.getPassword())) {
-//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), "Email or password is incorrect", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(), "No profile has been created", Toast.LENGTH_SHORT).show();
-//                }
+                EditText emailEntry = findViewById(R.id.email);
+                EditText passwordEntry = findViewById(R.id.password);
+                if(!(currentLogin.getEmail() == null || currentLogin.getEmail().equals("empty") || currentLogin.getPassword().equals("empty"))) {
+                    if(noLoginInputErrors(emailEntry, passwordEntry)){
+                        handleFirebaseSignIn();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "No profile has been created", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private boolean noLoginInputErrors(EditText emailEntry, EditText passwordEntry){
+        boolean incorrectLoginInput = true;
+        if(emailEntry.getText().toString().equals("")){
+            emailEntry.setError("This field is required");
+            incorrectLoginInput = false;
+        }
+        // Use provided Android functionality to check whether the Email Address is properly formatted
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEntry.getText().toString()).matches()){
+            emailEntry.setError("This email address is invalid");
+            incorrectLoginInput = false;
+        }
+        if(passwordEntry.getText().toString().equals("")){
+            passwordEntry.setError("This field is required");
+            incorrectLoginInput = false;
+        }
+        if(passwordEntry.getText().toString().length() < 7){
+            passwordEntry.setError("Password must be more than six characters");
+            incorrectLoginInput = false;
+        }
+        return incorrectLoginInput;
     }
 
     private void handleFirebaseSignIn(){
@@ -69,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("FIREBASE", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Sign in failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

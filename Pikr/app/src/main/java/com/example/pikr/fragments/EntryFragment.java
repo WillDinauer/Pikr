@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class EntryFragment extends Fragment {
     private Button mPostButton, mPhotoButton;
     private LinearLayout mLinearLayout;
     private String mPath;
+    private Uri uri;
     private static final int MAX_PHOTOS = 5;
     public EntryFragment() {
         // Required empty public constructor
@@ -128,7 +130,6 @@ public class EntryFragment extends Fragment {
 
     private void onItemSelected(int code){
         Intent intent;
-        Uri uri;
         File file = null;
         switch(code){
             case PHOTO_FROM_CAMERA_CODE:
@@ -157,6 +158,19 @@ public class EntryFragment extends Fragment {
                 intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, GALLERY_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data != null) {
+            if (requestCode == GALLERY_IMAGE_ACTIVITY_REQUEST_CODE || requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+                ImageButton imageButton = getView().findViewById(R.id.imageButton);
+                if(uri!=null)
+                    imageButton.setImageURI(uri);
+            }
         }
     }
 
