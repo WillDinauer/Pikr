@@ -65,6 +65,7 @@ import java.util.Date;
 
 public class CreateFragment extends Fragment {
     public static final CharSequence PERIOD_REPLACEMENT_KEY = "hgiasdvohekljh91-76";
+    public String emailKey;
 
     private static final int RESULT_OK = -1;
     private static final int PHOTO_FROM_CAMERA_CODE = 0;
@@ -83,9 +84,11 @@ public class CreateFragment extends Fragment {
     private static final int MAX_PHOTOS = 5;
     private Post newPost;
     private DatabaseReference mRef;
+    private DatabaseReference allPostsRef;
     private ValueEventListener postListener;
     private ArrayList<View> photoViews;
     private int postIndex;
+    private int allPostsIndex;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -140,8 +143,9 @@ public class CreateFragment extends Fragment {
         photoViews = new ArrayList<>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
+        emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
         mRef = database.getReference(emailKey);
+        allPostsRef = database.getReference("all posts");
 
         setupDatabaseListener();
         createPhotoButtonListener();
@@ -187,6 +191,7 @@ public class CreateFragment extends Fragment {
             if(complete) {
                 Log.d("TEST", "postIndex()" + postIndex);
                 mRef.child(String.valueOf(postIndex)).setValue(newPost);
+                allPostsRef.child(String.valueOf(allPostsIndex)).setValue(newPost);
                 clearFragment();
             }
             else{
@@ -204,13 +209,20 @@ public class CreateFragment extends Fragment {
     }
 
     private void setupDatabaseListener(){
-        final int[] size = new int[1];
+        final int[] size = new int[2];
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                size[0] = (int) dataSnapshot.getChildrenCount();
+                if(dataSnapshot.getKey().equals(emailKey)) {
+                    size[0] = (int) dataSnapshot.getChildrenCount();
+                    allPostsIndex += 1;
+                }
+                if (dataSnapshot.getKey().equals("all posts")){
+                    allPostsIndex = (int) dataSnapshot.getChildrenCount();
+                }
                 Log.d("TEST", "setupDatabaseListener()" + size[0]);
                 postIndex = size[0];
+                allPostsIndex = size[1];
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -224,7 +236,7 @@ public class CreateFragment extends Fragment {
 
         newPost.setTitle(mTitle.getText().toString());
         newPost.setDescription(mDescription.getText().toString());
-        newPost.setPictures(new ArrayList<Picture>());
+        newPost.setPictures(photoViews);
         newPost.setDatetime(getFormattedDateTime());
 
         return complete;

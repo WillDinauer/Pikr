@@ -1,5 +1,7 @@
 package com.example.pikr.models;
 
+import android.view.View;
+
 import com.example.pikr.models.Picture;
 
 import org.json.JSONArray;
@@ -13,7 +15,7 @@ public class Post {
     private String title;
     private String description;
     private String datetime;
-    private ArrayList<Picture> pictures;
+    private ArrayList<View> pictures;
     private boolean deleted;
 
     public Post(){
@@ -24,10 +26,10 @@ public class Post {
         this.title = title;
         this.description = description;
         this.datetime = datetime;
-        if (pictures.equals("")){                                       //FIX THIS
-            this.pictures = new ArrayList<>();
-        }
-        else this.pictures = jsonPicsToArray(pictures);
+//        if (pictures.equals("")){                                       //FIX THIS
+//            this.pictures = new ArrayList<>();
+//        }
+//        else this.pictures = jsonPicsToArray(pictures);
         deleted = false;
     }
 
@@ -79,11 +81,11 @@ public class Post {
         this.datetime = datetime;
     }
 
-    public ArrayList<Picture> getPictures() {
+    public ArrayList<View> getPictures() {
         return pictures;
     }
 
-    public void setPictures(ArrayList<Picture> pictures) {
+    public void setPictures(ArrayList<View> pictures) {
         this.pictures = pictures;
     }
 
