@@ -74,6 +74,7 @@
         android:layout_below="@+id/friends_lin_layout"
         android:layout_marginTop="14dp"
         android:background="@drawable/rectangle"
+        android:layout_marginBottom="70dp"
         android:padding="10dp"/>
 <!--    <androidx.viewpager2.widget.ViewPager2-->
 <!--        android:layout_width="match_parent"-->

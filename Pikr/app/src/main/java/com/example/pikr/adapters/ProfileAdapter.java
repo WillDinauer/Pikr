@@ -16,12 +16,13 @@ import com.example.pikr.R;
 import java.util.ArrayList;
 
 public class ProfileAdapter extends ArrayAdapter<Post> {
-
     private Context context;
+    private ArrayList<Post> posts;
 
     public ProfileAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Post> objects) {
         super(context, resource, objects);
         this.context = context;
+        posts = objects;
     }
 
     @NonNull
@@ -31,9 +32,10 @@ public class ProfileAdapter extends ArrayAdapter<Post> {
         TextView title = convertView.findViewById(R.id.entry_title);
         TextView time = convertView.findViewById(R.id.entry_time);
         TextView votes = convertView.findViewById(R.id.entry_votes);
-        title.setText("Title");
-        time.setText("12:12");
+        title.setText(posts.get(position).getTitle());
+        time.setText(posts.get(position).getDatetime());
         votes.setText("Votes: 0");
+
         return convertView;
     }
 }

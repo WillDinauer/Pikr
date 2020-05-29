@@ -49,7 +49,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,8 +64,9 @@ import java.util.Date;
  */
 
 public class CreateFragment extends Fragment {
+    public static final CharSequence PERIOD_REPLACEMENT_KEY = "hgiasdvohekljh91-76";
+
     private static final int RESULT_OK = -1;
-    private static final CharSequence PERIOD_REPLACEMENT_KEY = "hgiasdvohekljh91-76";
     private static final int PHOTO_FROM_CAMERA_CODE = 0;
     private static final int PHOTO_FROM_GALLERY_CODE = 1;
     private Login currLogin;
@@ -220,9 +224,20 @@ public class CreateFragment extends Fragment {
         newPost.setTitle(mTitle.getText().toString());
         newPost.setDescription(mDescription.getText().toString());
         newPost.setPictures(new ArrayList<Picture>());
-        newPost.setDatetime(Calendar.getInstance().getTime().toString());
+        newPost.setDatetime(getFormattedDateTime());
 
         return complete;
+    }
+
+    private String getFormattedDateTime(){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+        String month_name = month_date.format(c.getTime());
+
+        return month_name + " " + day + ", " + year;
     }
 
     private boolean allValuesFilledOut() {
