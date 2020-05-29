@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.pikr.BuildConfig;
 import com.example.pikr.R;
+import com.example.pikr.activities.MainActivity;
 import com.example.pikr.activities.RegisterActivity;
 import com.soundcloud.android.crop.Crop;
 import com.example.pikr.models.Login;
@@ -78,6 +81,7 @@ public class CreateFragment extends Fragment {
     private Post newPost;
     private DatabaseReference mRef;
     private ValueEventListener postListener;
+    private int postIndex;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -92,7 +96,7 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         checkPermissions();
-
+        postIndex = 0;
         currLogin = new Login(getContext().getApplicationContext());
         newPost = new Post();
         return inflater.inflate(R.layout.fragment_entry, container, false);
@@ -130,6 +134,11 @@ public class CreateFragment extends Fragment {
         mPhotoButton = view.findViewById(R.id.add_photo_button);
         mPostButton = view.findViewById(R.id.save_post_button);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
+        mRef = database.getReference(emailKey);
+
+        setupDatabaseListener();
         createPhotoButtonListener();
         createPublishPostListener();
         createPhotoButtonListener();
@@ -170,19 +179,38 @@ public class CreateFragment extends Fragment {
         @Override
         public void onClick(View view) {
             boolean complete = fillPostValues();
-
             if(complete) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                String emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
-                mRef = database.getReference(emailKey);
-                String currentIndex = "0";
-                mRef.child(currentIndex).setValue(newPost);
+                Log.d("TEST", "postIndex()" + postIndex);
+                mRef.child(String.valueOf(postIndex)).setValue(newPost);
+                clearFragment();
             }
             else{
                 Toast.makeText(getContext(), "Please fill in all fields",
                         Toast.LENGTH_SHORT).show();
             }
         }
+        });
+    }
+
+    private void clearFragment(){
+        Toast.makeText(getContext(), "Post Uploading!",
+                Toast.LENGTH_LONG).show();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyActivityFragment()).commit();
+    }
+
+    private void setupDatabaseListener(){
+        final int[] size = new int[1];
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                size[0] = (int) dataSnapshot.getChildrenCount();
+                Log.d("TEST", "setupDatabaseListener()" + size[0]);
+                postIndex = size[0];
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 
