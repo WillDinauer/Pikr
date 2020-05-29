@@ -73,18 +73,18 @@ public class CreateFragment extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
     private static final int GALLERY_IMAGE_ACTIVITY_REQUEST_CODE = 3;
     private TextView mTitle, mDescription;
-    private Button mPostButton, mPhotoButton;
+    private Button mPostButton, mPhotoButton, mDeleteButton;
     private Bitmap correctedBitmap;
     private ImageView mImage;
     private File mFile;
     private Uri mUri;
     private LinearLayout mLinearLayout;
     private String mPath;
-    private Uri uri;
     private static final int MAX_PHOTOS = 5;
     private Post newPost;
     private DatabaseReference mRef;
     private ValueEventListener postListener;
+    private ArrayList<View> photoViews;
     private int postIndex;
 
     public CreateFragment() {
@@ -137,6 +137,7 @@ public class CreateFragment extends Fragment {
         mDescription = view.findViewById(R.id.description_text);
         mPhotoButton = view.findViewById(R.id.add_photo_button);
         mPostButton = view.findViewById(R.id.save_post_button);
+        photoViews = new ArrayList<>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String emailKey = currLogin.getEmail().replace(".", PERIOD_REPLACEMENT_KEY);
@@ -149,31 +150,31 @@ public class CreateFragment extends Fragment {
         createPublishPostListener();
 
         mLinearLayout = view.findViewById(R.id.photo_scroll);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View scrollView = inflater.inflate(R.layout.photo_item, mLinearLayout, false);
-        mImage = scrollView.findViewById(R.id.imageView);
-        mLinearLayout.addView(scrollView);
     }
 
     private void createPhotoButtonListener() {
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkPermissions();
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Select Profile Picture");
-                builder.setNeutralButton("Take from camera", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        onItemSelected(PHOTO_FROM_CAMERA_CODE);
-                    }
-                });
-                builder.setPositiveButton("Take from gallery", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        onItemSelected(PHOTO_FROM_GALLERY_CODE);
-                    }
-                });
-                builder.show();
+                if (photoViews.size()<MAX_PHOTOS) {
+                    checkPermissions();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                    builder.setTitle("Select Profile Picture");
+                    builder.setNeutralButton("Take from camera", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            onItemSelected(PHOTO_FROM_CAMERA_CODE);
+                        }
+                    });
+                    builder.setPositiveButton("Take from gallery", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onItemSelected(PHOTO_FROM_GALLERY_CODE);
+                        }
+                    });
+                    builder.show();
+                }
+                else
+                    Toast.makeText(getContext(), "Maximum number of photos reached!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -353,7 +354,7 @@ public class CreateFragment extends Fragment {
     private void beginCrop(Uri source) {
         if (mFile != null) {
             Uri destination = FileProvider.getUriForFile(requireActivity(), BuildConfig.APPLICATION_ID, mFile);
-            Crop.of(source, destination).asSquare().start(requireActivity());
+            Crop.of(source, destination).asSquare().start(requireActivity(), this);
         }
     }
 
@@ -363,7 +364,14 @@ public class CreateFragment extends Fragment {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Crop.getOutput(result));
             int scale = (int) getResources().getDimension(R.dimen.image_length);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View scrollView = inflater.inflate(R.layout.photo_item, mLinearLayout, false);
+            mImage = scrollView.findViewById(R.id.imageView);
             mImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap, scale, scale, true));
+            mDeleteButton = scrollView.findViewById(R.id.photo_delete_button);
+            setupDelete(scrollView);
+            photoViews.add(scrollView);
+            mLinearLayout.addView(scrollView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -374,6 +382,30 @@ public class CreateFragment extends Fragment {
         String fileName = "JPEG_" + timeStamp + "_";
         File storageDirectory = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(fileName, ".jpg", storageDirectory);
+    }
+
+    private void setupDelete(final View view){
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
+                alert.setTitle("Deletion Alert");
+                alert.setMessage("Are you sure you want to delete this image?");
+                alert.setPositiveButton("Yes, Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mLinearLayout.removeView(view);
+                        photoViews.remove(view);
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert.show();
+            }
+        });
     }
 }
 
