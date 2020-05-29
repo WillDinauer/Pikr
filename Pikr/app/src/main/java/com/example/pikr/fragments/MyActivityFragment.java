@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MyActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Post>>{
+public class MyActivityFragment extends Fragment {
     private static final int LOAD_POSTS_ID = 1;
     private Login loginInfo;
     private ListView mListView;
@@ -37,7 +37,7 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
     private DatabaseReference mRef;
     private ArrayList<Post> userPosts;
 
-    public MyActivityFragment(){
+    public MyActivityFragment() {
         // Default constructor
     }
 
@@ -49,7 +49,7 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginInfo = new Login(getActivity().getApplicationContext());
-        userPosts = new ArrayList<Post>();
+        userPosts = new ArrayList<>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String emailKey = loginInfo.getEmail().replace(".", CreateFragment.PERIOD_REPLACEMENT_KEY);
@@ -61,7 +61,7 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_activity, container, false);
         String nameText = "Hello, " + loginInfo.getName() + "!";
-        ((TextView)view.findViewById(R.id.hello_text)).setText(nameText);
+        ((TextView) view.findViewById(R.id.hello_text)).setText(nameText);
 
         return view;
     }
@@ -74,32 +74,22 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
         mAdapter = new ProfileAdapter(requireActivity(), 0, userPosts);
         mListView.setAdapter(mAdapter);
         setupDatabaseListener();
-
-        LoaderManager.getInstance(this).initLoader(LOAD_POSTS_ID, null, this);
     }
 
-    @NonNull
-    @Override
-    public Loader<ArrayList<Post>> onCreateLoader(int id, @Nullable Bundle args) {
-        if (id == LOAD_POSTS_ID)
-            return new PastPostsLoader(requireActivity());
-        return null;
-    }
-
-    private void setupDatabaseListener(){
+    private void setupDatabaseListener() {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d("TEST", "onDataChange");
-                userPosts = new ArrayList<Post>();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Post post = postSnapshot.getValue(Post.class);
-                    if(post != null && !post.getDeleted()) {
-                        userPosts.add(post);
+                    if (post != null && !post.getDeleted()) {
+                        mAdapter.add(post);
                     }
                 }
                 mAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("TEST", "error loading profile");
@@ -108,24 +98,5 @@ public class MyActivityFragment extends Fragment implements LoaderManager.Loader
             }
         });
 
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<Post>> loader, ArrayList<Post> data) {
-        if (data==null){
-            Post post = new Post("", "", "", "");
-            ArrayList<Post> example = new ArrayList<>();
-            example.add(post);
-            mAdapter = new ProfileAdapter(requireActivity(), 0, userPosts);
-            mListView.setAdapter(mAdapter);
-        }
-        else if (loader.getId() == LOAD_POSTS_ID && data.size()>0){
-            mAdapter = new ProfileAdapter(requireActivity(), 0, data);
-            mListView.setAdapter(mAdapter);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<Post>> loader) {
     }
 }
