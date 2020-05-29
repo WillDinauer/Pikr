@@ -190,6 +190,7 @@ public class CreateFragment extends Fragment {
             boolean complete = fillPostValues();
             if(complete) {
                 Log.d("TEST", "postIndex()" + postIndex);
+                newPost.setId(postIndex);
                 mRef.child(String.valueOf(postIndex)).setValue(newPost);
                 allPostsRef.child(String.valueOf(allPostsIndex)).setValue(newPost);
                 clearFragment();

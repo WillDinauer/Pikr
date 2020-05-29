@@ -32,8 +32,8 @@ public class ProfileAdapter extends ArrayAdapter<Post> {
         TextView title = convertView.findViewById(R.id.entry_title);
         TextView time = convertView.findViewById(R.id.entry_time);
         TextView votes = convertView.findViewById(R.id.entry_votes);
-        title.setText(posts.get(position).getTitle());
-        time.setText(posts.get(position).getDatetime());
+        title.setText(posts.get(posts.size() - position - 1).getTitle());
+        time.setText(posts.get(posts.size() - 1 - position).getDatetime());
         votes.setText("Votes: 0");
 
         return convertView;

@@ -16,6 +16,7 @@ public class Post {
     private String description;
     private String datetime;
     private ArrayList<View> pictures;
+    private int id;
     private boolean deleted;
 
     public Post(){
@@ -95,5 +96,13 @@ public class Post {
 
     public boolean getDeleted(){
         return deleted;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int newId){
+        id = newId;
     }
 }
