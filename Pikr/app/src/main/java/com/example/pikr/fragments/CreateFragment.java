@@ -213,15 +213,28 @@ public class CreateFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("TEST", "HERE1");
+
                 if(dataSnapshot.getKey().equals(emailKey)) {
+                    Log.d("TEST", "HERE2");
+
                     size[0] = (int) dataSnapshot.getChildrenCount();
-                    allPostsIndex += 1;
-                }
-                if (dataSnapshot.getKey().equals("all posts")){
-                    allPostsIndex = (int) dataSnapshot.getChildrenCount();
                 }
                 Log.d("TEST", "setupDatabaseListener()" + size[0]);
                 postIndex = size[0];
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        allPostsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getKey().equals("all posts")){
+                    size[1] = (int) dataSnapshot.getChildrenCount();
+                }
                 allPostsIndex = size[1];
             }
             @Override
